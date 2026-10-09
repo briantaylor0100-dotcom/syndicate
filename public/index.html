@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10110f">
+    <title>Syndicate — Underworld Operations</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Syndicate home"><span class="brand-mark">S</span><span>SYNDICATE<small>UNDERWORLD OPERATIONS</small></span></a>
+        <div class="world-status"><span class="live-dot"></span> CITY NETWORK <span class="divider">/</span> LIVE WORLD</div>
+        <div class="top-actions"><div class="real-time-label"><span class="live-dot"></span> REAL-TIME</div><span id="account-name" class="account-name"></span><button id="logout" class="logout-button">LOG OUT</button></div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="eyebrow"><span class="rule"></span> THE CITY DOESN'T SLEEP</div>
+          <h1>Make your own<br><em>luck.</em></h1>
+          <p class="hero-copy">Every block has a price. Every name carries weight.<br>Build your corner of the city, one move at a time.</p>
+          <div class="hero-coordinates"><span>CHICAGO DISTRICT</span><span>41°52' N / 87°38' W</span></div>
+        </section>
+
+        <section class="player-strip" aria-label="Player overview">
+          <div class="identity"><div class="avatar">R</div><div><span class="eyebrow">YOUR HANDLE</span><strong id="player-name">ROOK</strong><span id="player-location" class="muted">THE DOCKS</span></div></div>
+          <div class="strip-stat"><span class="eyebrow">LEVEL</span><strong id="level-value">01</strong><div class="xp-track"><span id="xp-fill"></span></div><small id="xp-label">0 / 100 XP</small></div>
+          <div class="strip-stat resource-stat"><span class="eyebrow">ENERGY</span><strong><span id="energy-value">100</span><small class="unit">/ 100</small></strong><div class="meter"><span id="energy-fill" class="energy"></span></div><small id="energy-timer">+5 / 15 MIN</small></div>
+          <div class="strip-stat resource-stat"><span class="eyebrow">NERVE</span><strong><span id="nerve-value">100</span><small class="unit">/ 100</small></strong><div class="meter"><span id="nerve-fill" class="nerve"></span></div><small id="nerve-timer">+1 / 5 MIN</small></div>
+          <div class="strip-stat"><span class="eyebrow">HEALTH</span><strong><span id="health-value">100</span><small class="unit">%</small></strong><div class="meter"><span id="health-fill" class="health"></span></div></div>
+          <div class="strip-stat"><span class="eyebrow">REPUTATION</span><strong id="rep-value">05</strong><div class="meter"><span id="rep-fill" class="rep"></span></div></div>
+          <div class="strip-stat danger-stat"><span class="eyebrow">BOUNTY</span><strong id="bounty-value">$0</strong><small>ON YOUR HEAD</small></div>
+          <div class="strip-stat"><span class="eyebrow">CREDITS</span><strong id="credits-value">$0</strong><small>PERSONAL FUNDS</small></div>
+        </section>
+
+        <div class="dashboard">
+          <section class="main-column">
+            <section class="panel district-panel">
+              <div class="panel-heading"><div><span class="eyebrow">01 / YOUR PATCH</span><h2 id="district-title">The Docks</h2></div><span id="district-tag" class="tag">INDUSTRIAL</span></div>
+              <p id="district-description" class="panel-copy">Cold water, hot cargo, and people who ask fewer questions.</p>
+              <div id="travel-options" class="travel-row"></div>
+              <div class="subheading"><span>RESOURCE NODES</span><span>SCAVENGE THE DISTRICT</span></div>
+              <div id="node-list" class="node-list"></div>
+            </section>
+
+            <section class="panel workshop-panel">
+              <div class="panel-heading"><div><span class="eyebrow">02 / BACKROOM WORKSHOP</span><h2>Turn stock into leverage.</h2></div><span class="workshop-icon">⌁</span></div>
+              <div id="recipe-list" class="recipe-list"></div>
+              <div class="fine-print"><span class="risk-mark">▲</span> Production draws attention. More notoriety means more heat.</div>
+            </section>
+
+            <section class="panel training-panel">
+              <div class="panel-heading"><div><span class="eyebrow">03 / PERSONAL DEVELOPMENT</span><h2>Stay sharp.</h2></div><span class="tag">BATTLE TRAINING COSTS ENERGY</span></div>
+              <div id="training-list" class="training-list"></div>
+            </section>
+
+            <section class="panel company-panel">
+              <div class="panel-heading"><div><span class="eyebrow">04 / CORPORATE FRONT</span><h2>Build an empire.</h2></div><span class="tag">PASSIVE INCOME</span></div>
+              <div id="company-content"></div>
+            </section>
+          </section>
+
+          <aside class="side-column">
+            <section class="panel inventory-panel">
+              <div class="panel-heading compact"><div><span class="eyebrow">CARRYING</span><h2>Your inventory</h2></div><span class="inventory-count" id="inventory-count">0 ITEMS</span></div>
+              <div id="inventory-list" class="inventory-list"></div>
+            </section>
+            <section class="panel people-panel">
+              <div class="panel-heading compact"><div><span class="eyebrow">THE NEIGHBORHOOD</span><h2>Rivals & crews</h2></div><span class="live-dot"></span></div>
+              <div id="people-list" class="people-list"></div>
+            </section>
+            <section class="panel feed-panel">
+              <div class="panel-heading compact"><div><span class="eyebrow">FIELD NOTES</span><h2>Recent activity</h2></div><span class="feed-count">LIVE</span></div>
+              <div id="activity-feed" class="activity-feed" aria-live="polite"></div>
+            </section>
+            <section class="panel chat-panel">
+              <div class="panel-heading compact"><div><span class="eyebrow">LIVE FREQUENCY</span><h2>City chat</h2></div><span class="live-dot"></span></div>
+              <div class="chat-controls"><select id="chat-channel" aria-label="Chat channel"><option value="global">Global</option><option value="company">Company</option><option value="direct">Direct</option></select><select id="chat-target" class="hidden" aria-label="Chat recipient"></select></div>
+              <div id="chat-messages" class="chat-messages" aria-live="polite"></div>
+              <form id="chat-form" class="chat-form"><input id="chat-input" maxlength="500" placeholder="Send a message..." autocomplete="off"><button type="submit" aria-label="Send message">↗</button></form>
+            </section>
+            <div class="save-note"><span class="save-dot"></span> WORLD RUNNING IN REAL TIME</div>
+          </aside>
+        </div>
+      </main>
+      <footer><span>SYNDICATE <span class="muted">/ AN OPEN WORLD CRIME SIM</span></span><span>PLAY SMART. KEEP YOUR HEAD DOWN.</span></footer>
+      <div id="toast" class="toast" role="status"></div>
+    </div>
+  </body>
+</html>

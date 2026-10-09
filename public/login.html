@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#080b12">
+    <title>Syndicate — Secure Access</title>
+    <link rel="stylesheet" href="/login.css">
+    <script src="/login.js" defer></script>
+  </head>
+  <body>
+    <div class="backdrop-grid"></div><div class="scanline"></div>
+    <main class="auth-layout">
+      <section class="brand-side">
+        <a class="auth-brand" href="/"><span class="logo-mark">S</span><span>SYNDICATE<small>INDEPENDENT NETWORK</small></span></a>
+        <div class="brand-message"><span class="overline"><i></i> CITY NETWORK // SECURE ACCESS</span><h1>Power is<br>never <em>given.</em></h1><p>Build your name. Make your move.<br>Leave a mark they can't erase.</p></div>
+        <div class="district-readout"><span>47°36' N &nbsp; 122°20' W</span><span>ENCRYPTED UPLINK <b>●</b></span></div>
+      </section>
+      <section class="auth-side">
+        <div class="auth-card">
+          <div class="card-top"><span class="overline">WELCOME TO THE UNDERCITY</span><span class="status"><i></i> SYSTEM ONLINE</span></div>
+          <h2 id="form-title">Get back in.</h2><p id="form-subtitle" class="subtitle">Your crew's been waiting.</p>
+          <div class="mode-tabs" role="tablist"><button class="mode-tab active" data-mode="login" role="tab">SIGN IN</button><button class="mode-tab" data-mode="register" role="tab">CREATE ACCOUNT</button></div>
+          <form id="auth-form" novalidate>
+            <label id="username-wrap" class="field hidden">HANDLE<input id="username" name="username" type="text" autocomplete="username" minlength="3" maxlength="20" placeholder="e.g. nightshift"></label>
+            <label id="email-wrap" class="field hidden">EMAIL ADDRESS<input id="email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@somewhere.net"></label>
+            <label id="identity-wrap" class="field">HANDLE OR EMAIL<input id="identity" name="identity" type="text" autocomplete="username" required placeholder="Your handle or email"></label>
+            <label class="field">PASSWORD<input id="password" name="password" type="password" autocomplete="current-password" required minlength="10" maxlength="72" placeholder="10 characters minimum"></label>
+            <p id="form-error" class="form-error" aria-live="polite"></p>
+            <button id="submit-button" class="submit-button" type="submit"><span id="submit-label">ENTER THE CITY</span><span>↗</span></button>
+          </form>
+          <div class="secure-note"><span>◈</span> CREDENTIALS ENCRYPTED IN TRANSIT</div>
+        </div>
+        <footer><span>SYNDICATE // 0.2.0</span><span>TERMS <i>·</i> PRIVACY</span></footer>
+      </section>
+    </main>
+  </body>
+</html>
